@@ -1,6 +1,11 @@
 package com.example.nikeappchallenge.model
 
-
 class UrbanDictionaryDefinition(
-    val term: String
+    var definition: String,
+    var example: String,
+    var thumbs_up: Int,
+    var thumbs_down: Int,
+    var author: String
 )
+data class DescriptionList(
+    var list: List<UrbanDictionaryDefinition>)

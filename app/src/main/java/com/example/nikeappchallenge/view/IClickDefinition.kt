@@ -3,5 +3,5 @@ package com.example.nikeappchallenge.view
 import com.example.nikeappchallenge.model.UrbanDictionaryDefinition
 
 interface IClickDefinition {
-    fun onClick(definition: UrbanDictionaryDefinition)
+    fun onClick(urbanDefinition: UrbanDictionaryDefinition)
 }

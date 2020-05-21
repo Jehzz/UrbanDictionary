@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NikeAppChallenge</string>
+    <string name="Author">Author: </string>
 </resources>
