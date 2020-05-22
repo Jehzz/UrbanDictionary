@@ -8,7 +8,7 @@ import com.example.nikeappchallenge.model.DescriptionList
 import com.example.nikeappchallenge.model.RepoCallback
 import com.example.nikeappchallenge.model.repository.Repository
 
-class DefinitionsViewModel(): ViewModel() {
+class DefinitionsViewModel() : ViewModel() {
 
     private val TAG = "ViewModel"
 
@@ -21,13 +21,13 @@ class DefinitionsViewModel(): ViewModel() {
 
     fun getUrbanDescription(): LiveData<DescriptionList> = definitions
     fun getErrorMessage(): LiveData<String> = errorMessage
-    fun getIsViewLoading() : LiveData<Boolean> = isLoading
+    fun getIsViewLoading(): LiveData<Boolean> = isLoading
 
     //TODO: add UI elements for error and loading events
 
     fun loadDefinitions(term: String) {
         isLoading.postValue(true)
-        repository.retrieveDefinitions(term, object: RepoCallback<DescriptionList> {
+        repository.retrieveDefinitions(term, object : RepoCallback<DescriptionList> {
             override fun onSuccess(data: DescriptionList) {
                 definitions.value = data
                 isLoading.postValue(false)
@@ -40,16 +40,18 @@ class DefinitionsViewModel(): ViewModel() {
         })
     }
 
-    fun sortDefinitionsAscending() {
-        TODO("sorting not yet implemented")
+    fun sortByDownVotes() {
+        definitions.value?.list?.sortedBy { it.thumbs_up }?.reversed()
+            ?.apply { definitions.postValue(DescriptionList(this)) }
     }
 
-    fun sortDefinitionsDescending() {
-        TODO("sorting not yet implemented")
+    fun sortByUpVotes() {
+        definitions.value?.list?.sortedBy { it.thumbs_down }?.reversed()
+            ?.apply { definitions.postValue(DescriptionList(this)) }
     }
 }
 
-class DefinitionsViewModelFactory : ViewModelProvider.Factory{
+class DefinitionsViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return DefinitionsViewModel() as T
     }

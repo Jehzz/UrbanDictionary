@@ -79,6 +79,5 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
 
     override fun onClick(urbanDefinition: UrbanDictionaryDefinition) {
         //Any future behavior that depends on a selected definition can be triggered here
-        Log.d(TAG, "onClick: " + urbanDefinition.author)
     }
 }

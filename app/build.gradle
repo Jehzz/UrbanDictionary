@@ -31,6 +31,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+    }
 }
 
 dependencies {
@@ -51,6 +54,7 @@ dependencies {
     //Network
     implementation 'com.squareup.okhttp3:okhttp:4.7.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+    implementation 'org.jboss.forge.addon:mockito:2.13.0'
 
     //Testing frameworks
     testImplementation 'junit:junit:4.+'
