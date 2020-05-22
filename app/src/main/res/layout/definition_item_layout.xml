@@ -1,69 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_urbanDefinition"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:padding="4dp"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    app:cardElevation="2dp"
+    app:contentPadding="2dp">
 
-    <TextView
-        android:id="@+id/tv_definition"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="definition" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-    <ImageView
-        android:id="@+id/iv_upvotes"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="Up Arrow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_definition"
-        app:srcCompat="@android:drawable/arrow_up_float" />
+        <TextView
+            android:id="@+id/tv_definition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="definition" />
 
-    <TextView
-        android:id="@+id/tv_upvotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/iv_upvotes"
-        app:layout_constraintTop_toTopOf="@+id/iv_upvotes"
-        tools:text="upvotes" />
+        <ImageView
+            android:id="@+id/iv_upvotes"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="Up Arrow"
+            android:tint="@color/teel_200"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_example"
+            app:srcCompat="@android:drawable/arrow_up_float" />
 
-    <ImageView
-        android:id="@+id/iv_downvotes"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="Down Arrow"
-        app:layout_constraintStart_toEndOf="@+id/tv_upvotes"
-        app:layout_constraintTop_toBottomOf="@+id/tv_definition"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        <TextView
+            android:id="@+id/tv_upvotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/iv_upvotes"
+            app:layout_constraintTop_toTopOf="@+id/iv_upvotes"
+            tools:text="upvotes" />
 
-    <TextView
-        android:id="@+id/tv_downvotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/iv_downvotes"
-        app:layout_constraintTop_toTopOf="@+id/iv_downvotes"
-        tools:text="downvotes" />
+        <ImageView
+            android:id="@+id/iv_downvotes"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Down Arrow"
+            android:tint="@color/design_default_color_error"
+            app:layout_constraintStart_toEndOf="@+id/tv_upvotes"
+            app:layout_constraintTop_toTopOf="@+id/iv_upvotes"
+            app:srcCompat="@android:drawable/arrow_down_float" />
 
-    <TextView
-        android:id="@+id/tv_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_definition"
-        tools:text="Author" />
+        <TextView
+            android:id="@+id/tv_downvotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/iv_downvotes"
+            app:layout_constraintTop_toTopOf="@+id/iv_downvotes"
+            tools:text="downvotes" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_upvotes"
+            tools:text="Author" />
+
+        <TextView
+            android:id="@+id/tv_example"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_definition"
+            tools:text="example" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

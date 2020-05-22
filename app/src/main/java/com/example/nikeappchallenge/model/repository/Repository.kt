@@ -20,13 +20,13 @@ class Repository {
     fun getError(): LiveData<String>? = errorMessage
     fun getAllDefinitions(): LiveData<DescriptionList> = allDefinitions
 
-    fun makeNewQuery(term: String){
+    fun makeNewQuery(term: String) {
         Log.d(TAG, "makeNewQuery: ")
         RetrofitEndpoint.initRetrofit().getDefinition(term)
             .enqueue(object : Callback<DescriptionList> {
 
                 override fun onFailure(call: Call<DescriptionList>, t: Throwable) {
-                    Log.d(TAG, "onFailure: " +t.stackTrace)
+                    Log.d(TAG, "onFailure: " + t.stackTrace)
                 }
                 override fun onResponse(
                     call: Call<DescriptionList>,

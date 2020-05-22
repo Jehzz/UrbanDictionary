@@ -35,6 +35,7 @@ class RecyclerViewAdapter(val dataSet: DescriptionList, val clickListener: (Urba
             itemView.setOnClickListener { clickListener(data.list[position]) }
 
             itemView.tv_definition.text =  data.list[position].definition
+            itemView.tv_example.text = data.list[position].example
             itemView.tv_upvotes.text = data.list[position].thumbs_up.toString()
             itemView.tv_downvotes.text = data.list[position].thumbs_down.toString()
             itemView.tv_author.text = context?.getString(R.string.Author) + data.list[position].author

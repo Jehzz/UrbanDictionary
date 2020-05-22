@@ -13,6 +13,7 @@ import com.example.nikeappchallenge.R
 import com.example.nikeappchallenge.model.DescriptionList
 import com.example.nikeappchallenge.model.UrbanDictionaryDefinition
 import com.example.nikeappchallenge.viewmodel.DefinitionsViewModel
+import com.example.nikeappchallenge.viewmodel.DefinitionsViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -27,21 +28,19 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupViewmodel()
-        observeViewModel(definitionsViewModel)
-        setTextChangedListener(definitionsViewModel)
+
+        setupViewModel()
+        observeViewModel()
+        setTextChangedListener()
     }
 
-    private fun setupViewmodel() {
-        definitionsViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return DefinitionsViewModel() as T
-            }
-        }).get(DefinitionsViewModel::class.java)
+    private fun setupViewModel() {
+        definitionsViewModel = ViewModelProvider(this, DefinitionsViewModelFactory())
+            .get(DefinitionsViewModel::class.java)
     }
 
-    private fun observeViewModel(viewModel: DefinitionsViewModel){
-        viewModel.getUrbanDescription()
+    private fun observeViewModel() {
+        definitionsViewModel.getUrbanDescription()
             .observe(this, Observer<DescriptionList> { t ->
                 rv_search_results.layoutManager = LinearLayoutManager(
                     this@MainActivity
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
     /*TextWatcher with timer delay prevents flooding the network with API calls on each
     keyboard stroke, only responds when user is done typing.
     */
-    private fun setTextChangedListener(viewModel: DefinitionsViewModel) {
+    private fun setTextChangedListener() {
         et_term_search.addTextChangedListener(object : TextWatcher {
             var timer = Timer()
             override fun afterTextChanged(s: Editable?) {
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
                 timer.schedule(object : TimerTask() {
                     override fun run() {
                         GlobalScope.launch {
-                            viewModel.loadDefinitions(s.toString())
+                            definitionsViewModel.loadDefinitions(s.toString())
                         }
                     }
                 }, 600)
@@ -79,6 +78,7 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
     }
 
     override fun onClick(urbanDefinition: UrbanDictionaryDefinition) {
-        Log.d(TAG, "onClick: "+urbanDefinition.author)
+        //Any future behavior that depends on a selected definition can be triggered here
+        Log.d(TAG, "onClick: " + urbanDefinition.author)
     }
 }
