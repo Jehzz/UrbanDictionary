@@ -21,7 +21,7 @@ class DefinitionsViewModel(): ViewModel() {
     //TODO: inject repository dependency
     private val repository = Repository()
 
-    private var definitions = MutableLiveData<DescriptionList>()
+    private var definitions = repository.getAllDefinitions()
     private val errorMessage = MutableLiveData<String>()
 
     fun getUrbanDescription(): LiveData<DescriptionList> = definitions
