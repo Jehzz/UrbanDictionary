@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +24,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), IClickDefinition {
 
+
     private val TAG = "MainActivity"
 
     private lateinit var definitionsViewModel: DefinitionsViewModel
@@ -32,6 +36,30 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
         setupViewModel()
         observeViewModel()
         setTextChangedListener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //super.onCreateOptionsMenu(menu)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.sort_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.mi_sort_downvotes -> {
+            definitionsViewModel.sortByDownVotes()
+            //rv_search_results.adapter?.notifyDataSetChanged()   SHOULDNT BE NECESSARY
+            true
+        }
+        R.id.mi_sort_upvotes -> {
+            definitionsViewModel.sortByUpVotes()
+            //rv_search_results.adapter?.notifyDataSetChanged()
+            true
+        }
+        else -> {
+            //Unrecognized input
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupViewModel() {

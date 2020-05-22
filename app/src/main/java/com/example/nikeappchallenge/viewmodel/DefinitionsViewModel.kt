@@ -1,5 +1,6 @@
 package com.example.nikeappchallenge.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,12 +42,14 @@ class DefinitionsViewModel() : ViewModel() {
     }
 
     fun sortByDownVotes() {
-        definitions.value?.list?.sortedBy { it.thumbs_up }?.reversed()
+        Log.d(TAG, "sortByDownVotes: ")
+        definitions.value?.list?.sortedBy { it.thumbs_down }?.reversed()
             ?.apply { definitions.postValue(DescriptionList(this)) }
     }
 
     fun sortByUpVotes() {
-        definitions.value?.list?.sortedBy { it.thumbs_down }?.reversed()
+        Log.d(TAG, "sortByUpVotes: ")
+        definitions.value?.list?.sortedBy { it.thumbs_up }?.reversed()
             ?.apply { definitions.postValue(DescriptionList(this)) }
     }
 }
