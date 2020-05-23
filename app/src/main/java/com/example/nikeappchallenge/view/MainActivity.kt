@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -38,9 +39,6 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
         definitionsViewModel = ViewModelProvider(this, DefinitionsViewModelFactory())
             .get(DefinitionsViewModel::class.java)
 
-        //TODO: Retool Viewmodel factory to work with injected Repository
-        //definitionsViewModel = DefinitionsViewModel(repository)
-
     }
 
     private fun setupObservables() {
@@ -59,12 +57,14 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
                 }
             })
 
-        //TODO: add proper UI elements for loading and error status
 
-        //Observe loading response
+        //Observe loading status
         definitionsViewModel.getIsViewLoading()
             .observe(this, Observer{ t->
-                Toast.makeText(this@MainActivity, t.toString(), Toast.LENGTH_SHORT).show()
+                when(t){
+                    true -> progressBar.visibility = View.VISIBLE
+                    false-> progressBar.visibility = View.GONE
+                }
             })
 
         //Observe error response
