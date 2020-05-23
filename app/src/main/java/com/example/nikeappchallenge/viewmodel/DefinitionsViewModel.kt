@@ -7,14 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.nikeappchallenge.model.DescriptionList
 import com.example.nikeappchallenge.model.RepoCallback
+import com.example.nikeappchallenge.model.repository.IRepo
 import com.example.nikeappchallenge.model.repository.Repository
 
-class DefinitionsViewModel() : ViewModel() {
+class DefinitionsViewModel(private val repository: IRepo) : ViewModel() {
 
     private val TAG = "ViewModel"
-
-    //TODO: inject repository dependency
-    private val repository = Repository()
 
     private var definitions = MutableLiveData<DescriptionList>()
     private val errorMessage = MutableLiveData<String>()
@@ -23,8 +21,6 @@ class DefinitionsViewModel() : ViewModel() {
     fun getUrbanDescription(): LiveData<DescriptionList> = definitions
     fun getErrorMessage(): LiveData<String> = errorMessage
     fun getIsViewLoading(): LiveData<Boolean> = isLoading
-
-    //TODO: add UI elements for error and loading events
 
     fun loadDefinitions(term: String) {
         isLoading.postValue(true)
@@ -54,8 +50,9 @@ class DefinitionsViewModel() : ViewModel() {
     }
 }
 
+
 class DefinitionsViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return DefinitionsViewModel() as T
+        return DefinitionsViewModel(repository = Repository()) as T
     }
 }

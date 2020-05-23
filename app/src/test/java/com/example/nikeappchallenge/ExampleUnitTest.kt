@@ -1,8 +1,18 @@
 package com.example.nikeappchallenge
 
+import com.example.nikeappchallenge.model.DescriptionList
+import com.example.nikeappchallenge.model.network.RetrofitEndpoint
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.Test
 
 import org.junit.Assert.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import java.lang.Thread.sleep
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,7 +21,9 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun test_network() {
+
+        //TODO
+
     }
 }

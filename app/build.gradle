@@ -38,6 +38,7 @@ android {
 
 dependencies {
 
+    //Base Android + Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -53,12 +54,19 @@ dependencies {
 
     //Network
     implementation 'com.squareup.okhttp3:okhttp:4.7.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
     implementation 'org.jboss.forge.addon:mockito:2.13.0'
 
     //Testing frameworks
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
+    //Mockito
+    implementation 'org.mockito:mockito-core:3.3.3'
+    testImplementation 'org.mockito:mockito-inline:2.8.47'
+    androidTestImplementation "android.arch.core:core-testing:1.1.1"
+    androidTestImplementation 'org.mockito:mockito-android:2.8.47'
+
 }

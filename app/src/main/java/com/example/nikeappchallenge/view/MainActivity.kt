@@ -2,25 +2,20 @@ package com.example.nikeappchallenge.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nikeappchallenge.R
 import com.example.nikeappchallenge.model.DescriptionList
 import com.example.nikeappchallenge.model.UrbanDictionaryDefinition
+import com.example.nikeappchallenge.model.repository.Repository
 import com.example.nikeappchallenge.viewmodel.DefinitionsViewModel
 import com.example.nikeappchallenge.viewmodel.DefinitionsViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.util.*
 
 class MainActivity : AppCompatActivity(), IClickDefinition {
 
@@ -29,45 +24,28 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
 
     private lateinit var definitionsViewModel: DefinitionsViewModel
 
+    private val repository by lazy { Repository() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setupViewModel()
-        observeViewModel()
-        setTextChangedListener()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        //super.onCreateOptionsMenu(menu)
-        val inflater = menuInflater
-        inflater.inflate(R.menu.sort_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.mi_sort_downvotes -> {
-            definitionsViewModel.sortByDownVotes()
-            //rv_search_results.adapter?.notifyDataSetChanged()   SHOULDNT BE NECESSARY
-            true
-        }
-        R.id.mi_sort_upvotes -> {
-            definitionsViewModel.sortByUpVotes()
-            //rv_search_results.adapter?.notifyDataSetChanged()
-            true
-        }
-        else -> {
-            //Unrecognized input
-            super.onOptionsItemSelected(item)
-        }
+        setupObservables()
     }
 
     private fun setupViewModel() {
+
         definitionsViewModel = ViewModelProvider(this, DefinitionsViewModelFactory())
             .get(DefinitionsViewModel::class.java)
+
+        //TODO: Retool Viewmodel factory to work with injected Repository
+        //definitionsViewModel = DefinitionsViewModel(repository)
+
     }
 
-    private fun observeViewModel() {
+    private fun setupObservables() {
+
+        //Observe Definitions response
         definitionsViewModel.getUrbanDescription()
             .observe(this, Observer<DescriptionList> { t ->
                 rv_search_results.layoutManager = LinearLayoutManager(
@@ -80,32 +58,60 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
                         ) { urbanDefinition: UrbanDictionaryDefinition -> onClick(urbanDefinition) }
                 }
             })
-    }
 
-    /*TextWatcher with timer delay prevents flooding the network with API calls on each
-    keyboard stroke, only responds when user is done typing.
-    */
-    private fun setTextChangedListener() {
-        et_term_search.addTextChangedListener(object : TextWatcher {
-            var timer = Timer()
-            override fun afterTextChanged(s: Editable?) {
-                timer = Timer()
-                timer.schedule(object : TimerTask() {
-                    override fun run() {
-                        GlobalScope.launch {
-                            definitionsViewModel.loadDefinitions(s.toString())
-                        }
-                    }
-                }, 600)
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                timer.cancel()
-            }
-        })
+        //TODO: add proper UI elements for loading and error status
+
+        //Observe loading response
+        definitionsViewModel.getIsViewLoading()
+            .observe(this, Observer{ t->
+                Toast.makeText(this@MainActivity, t.toString(), Toast.LENGTH_SHORT).show()
+            })
+
+        //Observe error response
+        definitionsViewModel.getErrorMessage()
+            .observe(this, Observer{ t->
+                Toast.makeText(this@MainActivity, t, Toast.LENGTH_LONG).show()
+            })
     }
 
     override fun onClick(urbanDefinition: UrbanDictionaryDefinition) {
         //Any future behavior that depends on a selected definition can be triggered here
+        //example: launching a fragment view of the definition showing more information, or allowing
+        //the user to vote it up or down if the API allows
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.sort_menu, menu)
+
+        val searchItem = menu?.findItem(R.id.mi_searchView)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                definitionsViewModel.loadDefinitions(query.toString())
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                return true
+            }
+        })
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.mi_sort_downvotes -> {
+            definitionsViewModel.sortByDownVotes()
+            true
+        }
+        R.id.mi_sort_upvotes -> {
+            definitionsViewModel.sortByUpVotes()
+            true
+        }
+        else -> {
+            //Unrecognized input
+            super.onOptionsItemSelected(item)
+        }
     }
 }
