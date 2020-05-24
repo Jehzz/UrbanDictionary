@@ -2,6 +2,7 @@ package com.example.nikeappchallenge.model.network
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import com.example.nikeappchallenge.App
 import com.example.nikeappchallenge.BuildConfig
 import com.example.nikeappchallenge.model.DescriptionList
@@ -71,15 +72,21 @@ interface RetrofitEndpoint {
             return Cache(App.context!!.cacheDir, cacheSize)
         }
 
-        //TODO: replace deprecated methods
+
         private fun offLineMode(): Boolean {
-            val connectiviyManager: ConnectivityManager = App.context!!
+            var isConnected: Boolean
+            val connectiviyManager = App.context!!
                 .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-            var isConnected = false
-            connectiviyManager.activeNetworkInfo?.let {
-                isConnected = it.isConnected
-            }
+            connectiviyManager
+                .getNetworkCapabilities(connectiviyManager.activeNetwork)
+                .apply {
+                    isConnected = when {
+                        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                        hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                        else -> false
+                    }
+                }
             return isConnected
         }
     }
