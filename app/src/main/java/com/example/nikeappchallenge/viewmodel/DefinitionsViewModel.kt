@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.nikeappchallenge.model.DescriptionList
-import com.example.nikeappchallenge.model.RepoCallback
+import com.example.nikeappchallenge.model.repository.RepoCallback
 import com.example.nikeappchallenge.model.repository.IRepo
 import com.example.nikeappchallenge.model.repository.Repository
 
@@ -24,7 +24,8 @@ class DefinitionsViewModel(private val repository: IRepo) : ViewModel() {
 
     fun loadDefinitions(term: String) {
         isLoading.postValue(true)
-        repository.retrieveDefinitions(term, object : RepoCallback<DescriptionList> {
+        repository.retrieveDefinitions(term, object :
+            RepoCallback<DescriptionList> {
             override fun onSuccess(data: DescriptionList) {
                 definitions.value = data
                 isLoading.postValue(false)
@@ -38,18 +39,19 @@ class DefinitionsViewModel(private val repository: IRepo) : ViewModel() {
     }
 
     fun sortByDownVotes() {
+        //TODO: add boolean to hold user's sorting choice between searches
         Log.d(TAG, "sortByDownVotes: ")
         definitions.value?.list?.sortedBy { it.thumbs_down }?.reversed()
             ?.apply { definitions.postValue(DescriptionList(this)) }
     }
 
     fun sortByUpVotes() {
+        //TODO: add boolean to hold user's sorting choice between searches
         Log.d(TAG, "sortByUpVotes: ")
         definitions.value?.list?.sortedBy { it.thumbs_up }?.reversed()
             ?.apply { definitions.postValue(DescriptionList(this)) }
     }
 }
-
 
 class DefinitionsViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -1,10 +1,8 @@
 package com.example.nikeappchallenge.model.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.nikeappchallenge.model.DescriptionList
-import com.example.nikeappchallenge.model.network.RetrofitEndpoint
+import com.example.nikeappchallenge.model.network.Network
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,11 +11,9 @@ class Repository:IRepo{
 
     private val TAG = "Repository"
 
-    private val errorMessage = MutableLiveData<String>()
-    fun getError(): LiveData<String>? = errorMessage
-
-    override fun retrieveDefinitions(term: String, repoCallback: com.example.nikeappchallenge.model.RepoCallback<DescriptionList>) {
-        RetrofitEndpoint.initRetrofit().getDefinition(term).enqueue(object :Callback<DescriptionList>{
+    override fun retrieveDefinitions(term: String, repoCallback: RepoCallback<DescriptionList>) {
+        val network = Network()
+            network.initRetrofit().getDefinition(term).enqueue(object :Callback<DescriptionList>{
             override fun onFailure(call: Call<DescriptionList>, t: Throwable) {
                 repoCallback.onError(t.message)
             }

@@ -2,6 +2,7 @@ package com.example.nikeappchallenge.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,12 +21,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), IClickDefinition {
 
-
     private val TAG = "MainActivity"
 
     private lateinit var definitionsViewModel: DefinitionsViewModel
-
-    private val repository by lazy { Repository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +33,12 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
     }
 
     private fun setupViewModel() {
-
         definitionsViewModel = ViewModelProvider(this, DefinitionsViewModelFactory())
             .get(DefinitionsViewModel::class.java)
 
     }
 
     private fun setupObservables() {
-
         //Observe Definitions response
         definitionsViewModel.getUrbanDescription()
             .observe(this, Observer<DescriptionList> { t ->
@@ -56,7 +52,6 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
                         ) { urbanDefinition: UrbanDictionaryDefinition -> onClick(urbanDefinition) }
                 }
             })
-
 
         //Observe loading status
         definitionsViewModel.getIsViewLoading()
@@ -78,6 +73,7 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
         //Any future behavior that depends on a selected definition can be triggered here
         //example: launching a fragment view of the definition showing more information, or allowing
         //the user to vote it up or down if the API allows
+        Log.d(TAG, "onClick: "+urbanDefinition.author)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
