@@ -2,6 +2,8 @@ package com.example.nikeappchallenge
 
 import android.app.Application
 import android.content.Context
+import okhttp3.Cache
+import java.io.File
 
 //This class allows accessing the App's context anywhere
 class App : Application() {
@@ -12,7 +14,6 @@ class App : Application() {
     }
 
     companion object {
-        var context: Context? = null
-            private set
+        lateinit var context: Context
     }
 }

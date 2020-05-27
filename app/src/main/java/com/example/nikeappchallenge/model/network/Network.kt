@@ -1,5 +1,11 @@
 package com.example.nikeappchallenge.model.network
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
+import com.example.nikeappchallenge.App
 import com.example.nikeappchallenge.model.utils.Constants
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,4 +32,6 @@ class Network {
             .build()
         return retrofit.create(RetrofitEndpoint::class.java)
     }
+
+
 }

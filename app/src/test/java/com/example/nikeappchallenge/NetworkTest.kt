@@ -1,27 +1,22 @@
 package com.example.nikeappchallenge
 
-import android.util.Log
 import com.example.nikeappchallenge.model.DescriptionList
 import com.example.nikeappchallenge.model.network.Network
-import com.example.nikeappchallenge.model.network.RetrofitEndpoint
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.mockito.Mock
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.lang.Thread.sleep
 
-class ExampleUnitTest {
+class NetworkTest {
 
     //Class under test
     var network = Network()
 
+    //Test variables
+    var responseCode: Int = 0
     var testResponse: DescriptionList? = null
 
     @Test
@@ -33,14 +28,16 @@ class ExampleUnitTest {
             override fun onResponse(call: Call<DescriptionList>, response: Response<DescriptionList>) {
                 response.body()?.let {
                     if(response.isSuccessful){
+                        responseCode = response.code()
                         testResponse = response.body()
                     }
                 }
             }
         })
 
-        //wait for valid response, check it exists
-        sleep(1000)
+        //wait for and check response
+        sleep(1000) //TODO: replace hard coded wait with synchronous wait
+        assertEquals(responseCode, 200) //might be redundant
         assertNotNull(testResponse)
     }
 }

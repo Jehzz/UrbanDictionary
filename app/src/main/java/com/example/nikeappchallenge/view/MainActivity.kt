@@ -23,19 +23,15 @@ class MainActivity : AppCompatActivity(), IClickDefinition {
 
     private val TAG = "MainActivity"
 
-    private lateinit var definitionsViewModel: DefinitionsViewModel
+    private val definitionsViewModel: DefinitionsViewModel by lazy {
+        ViewModelProvider(this, DefinitionsViewModelFactory())
+            .get(DefinitionsViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupViewModel()
         setupObservables()
-    }
-
-    private fun setupViewModel() {
-        definitionsViewModel = ViewModelProvider(this, DefinitionsViewModelFactory())
-            .get(DefinitionsViewModel::class.java)
-
     }
 
     private fun setupObservables() {
