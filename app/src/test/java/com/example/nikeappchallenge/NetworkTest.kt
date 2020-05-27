@@ -1,10 +1,11 @@
 package com.example.nikeappchallenge
 
-import com.example.nikeappchallenge.model.DescriptionList
+import com.example.nikeappchallenge.model.network.DescriptionList
 import com.example.nikeappchallenge.model.network.Network
-import org.junit.Test
 
+import org.junit.Test
 import org.junit.Assert.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +13,8 @@ import java.lang.Thread.sleep
 
 class NetworkTest {
 
-    //Class under test
+    //TODO: update test or App.kt, usage of App.context for cacheDir causes fail: context uninitialized
+
     var network = Network()
 
     //Test variables

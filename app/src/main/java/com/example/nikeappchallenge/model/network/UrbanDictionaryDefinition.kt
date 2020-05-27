@@ -1,4 +1,4 @@
-package com.example.nikeappchallenge.model
+package com.example.nikeappchallenge.model.network
 
 class UrbanDictionaryDefinition(
     var definition: String,

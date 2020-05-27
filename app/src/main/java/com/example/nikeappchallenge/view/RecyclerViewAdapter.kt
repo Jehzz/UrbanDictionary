@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nikeappchallenge.App
 import com.example.nikeappchallenge.App.Companion.context
 import com.example.nikeappchallenge.R
-import com.example.nikeappchallenge.model.DescriptionList
-import com.example.nikeappchallenge.model.UrbanDictionaryDefinition
+import com.example.nikeappchallenge.model.network.DescriptionList
+import com.example.nikeappchallenge.model.network.UrbanDictionaryDefinition
 import kotlinx.android.synthetic.main.definition_item_layout.view.*
 
 class RecyclerViewAdapter(val dataSet: DescriptionList, val clickListener: (UrbanDictionaryDefinition) -> Unit) :
@@ -38,7 +39,7 @@ class RecyclerViewAdapter(val dataSet: DescriptionList, val clickListener: (Urba
             itemView.tv_example.text = data.list[position].example
             itemView.tv_upvotes.text = data.list[position].thumbs_up.toString()
             itemView.tv_downvotes.text = data.list[position].thumbs_down.toString()
-            itemView.tv_author.text = context?.getString(R.string.Author) + data.list[position].author
+            itemView.tv_author.text = context.getString(R.string.Author) + data.list[position].author
         }
     }
 }

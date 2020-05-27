@@ -1,4 +1,4 @@
-package com.example.nikeappchallenge.model.utils
+package com.example.nikeappchallenge.utils
 
 object Constants {
     //TODO: hide api key, deactivate current leaked key and replace

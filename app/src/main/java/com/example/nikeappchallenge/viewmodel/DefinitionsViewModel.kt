@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.nikeappchallenge.model.DescriptionList
+import com.example.nikeappchallenge.model.network.DescriptionList
 import com.example.nikeappchallenge.model.repository.RepoCallback
 import com.example.nikeappchallenge.model.repository.IRepo
 import com.example.nikeappchallenge.model.repository.Repository
@@ -42,14 +42,22 @@ class DefinitionsViewModel(private val repository: IRepo) : ViewModel() {
         //TODO: add boolean to hold user's sorting choice between searches
         Log.d(TAG, "sortByDownVotes: ")
         definitions.value?.list?.sortedBy { it.thumbs_down }?.reversed()
-            ?.apply { definitions.postValue(DescriptionList(this)) }
+            ?.apply { definitions.postValue(
+                DescriptionList(
+                    this
+                )
+            ) }
     }
 
     fun sortByUpVotes() {
         //TODO: add boolean to hold user's sorting choice between searches
         Log.d(TAG, "sortByUpVotes: ")
         definitions.value?.list?.sortedBy { it.thumbs_up }?.reversed()
-            ?.apply { definitions.postValue(DescriptionList(this)) }
+            ?.apply { definitions.postValue(
+                DescriptionList(
+                    this
+                )
+            ) }
     }
 }
 

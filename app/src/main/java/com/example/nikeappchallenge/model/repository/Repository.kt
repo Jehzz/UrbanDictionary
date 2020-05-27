@@ -1,7 +1,7 @@
 package com.example.nikeappchallenge.model.repository
 
 import android.util.Log
-import com.example.nikeappchallenge.model.DescriptionList
+import com.example.nikeappchallenge.model.network.DescriptionList
 import com.example.nikeappchallenge.model.network.Network
 import retrofit2.Call
 import retrofit2.Callback

@@ -1,7 +1,6 @@
 package com.example.nikeappchallenge.model.network
 
-import com.example.nikeappchallenge.model.DescriptionList
-import com.example.nikeappchallenge.model.utils.Constants
+import com.example.nikeappchallenge.utils.Constants
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

@@ -12,9 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nikeappchallenge.R
-import com.example.nikeappchallenge.model.DescriptionList
-import com.example.nikeappchallenge.model.UrbanDictionaryDefinition
-import com.example.nikeappchallenge.model.repository.Repository
+import com.example.nikeappchallenge.model.network.DescriptionList
+import com.example.nikeappchallenge.model.network.UrbanDictionaryDefinition
 import com.example.nikeappchallenge.viewmodel.DefinitionsViewModel
 import com.example.nikeappchallenge.viewmodel.DefinitionsViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
